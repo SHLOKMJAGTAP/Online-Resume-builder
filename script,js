@@ -1,0 +1,110 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 1. OPTIMIZED HERO PARALLAX & PROGRESS ---
+    const heroH1 = document.querySelector('.hero h1');
+    const heroLine = document.querySelector('.hero-line');
+    const heroEmail = document.querySelector('.hero-email');
+    const scrollTracker = document.getElementById('scroll-tracker');
+
+    // Use a ticking flag to throttle scroll events for performance
+    let isScrolling = false;
+
+    window.addEventListener('scroll', () => {
+        if (!isScrolling) {
+            window.requestAnimationFrame(() => {
+                updateScrollEffects();
+                isScrolling = false;
+            });
+            isScrolling = true;
+        }
+    });
+
+    function updateScrollEffects() {
+        const scrollVal = window.scrollY;
+        
+        // Hero Parallax (Only runs when hero is visible)
+        if (scrollVal < window.innerHeight) {
+            if (heroH1) heroH1.style.transform = `translateY(${scrollVal * 0.25}px)`;
+            if (heroLine) heroLine.style.transform = `scaleX(${Math.max(0, 1 - scrollVal / 800)})`;
+            if (heroEmail) heroEmail.style.opacity = 1 - (scrollVal / 600);
+        }
+
+        // Progress Bar Logic
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (scrollVal / windowHeight) * 100;
+        if (scrollTracker) {
+            scrollTracker.style.width = `${scrolled}%`;
+        }
+    }
+
+    // --- 2. ENHANCED REVEAL OBSERVER ---
+    const revealItems = document.querySelectorAll('.reveal');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // stop observing to save CPU once revealed
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    revealItems.forEach((item, index) => {
+        // Dynamic stagger based on grid position (assuming 3-column bento)
+        const delay = (index % 3) * 0.2; 
+        item.style.transitionDelay = `${delay}s`;
+        revealObserver.observe(item);
+    });
+
+    // --- 3. KINETIC MOUSE GLOW ---
+    const bgGlow = document.createElement('div');
+    bgGlow.className = 'mouse-glow'; // Moved styles to CSS for cleaner JS
+    bgGlow.style.cssText = `
+        position: fixed;
+        width: 1000px;
+        height: 1000px;
+        background: radial-gradient(circle, rgba(197, 160, 89, 0.07) 0%, transparent 70%);
+        top: 0; left: 0;
+        pointer-events: none;
+        z-index: 0;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+    `;
+    document.body.appendChild(bgGlow);
+
+    document.addEventListener('mousemove', (e) => {
+        // High-performance animation API
+        bgGlow.animate({
+            left: `${e.clientX}px`,
+            top: `${e.clientY}px`
+        }, { 
+            duration: 1200, // Slightly slower duration for a "liquid" feel
+            fill: "forwards", 
+            easing: "cubic-bezier(0.16, 1, 0.3, 1)" 
+        });
+    });
+
+    // --- 4. PREMIUM 3D TILT EFFECT ---
+    const profileFrame = document.querySelector('.profile-frame');
+    if (profileFrame) {
+        profileFrame.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = profileFrame.getBoundingClientRect();
+            
+            // Calculate rotation based on cursor distance from center of card
+            const centerX = left + width / 2;
+            const centerY = top + height / 2;
+            const mouseX = e.clientX - centerX;
+            const mouseY = e.clientY - centerY;
+            
+            const rotateX = (mouseY / (height / 2)) * -8; // Max 8 degrees
+            const rotateY = (mouseX / (width / 2)) * 8;
+
+            profileFrame.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+
+        profileFrame.addEventListener('mouseleave', () => {
+            profileFrame.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
+    }
+});

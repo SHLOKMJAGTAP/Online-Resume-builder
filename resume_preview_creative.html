@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bento Creative | {{ user.name }}</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;500;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #f0f0f0;
+            font-family: 'Inter', sans-serif;
+            padding: 80px 40px 40px; /* Increased top padding to accommodate fixed buttons */
+            color: #1a1a1a;
+        }
+
+        /* --- THE GRID SYSTEM --- */
+        .bento-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+        }
+
+        /* Common Box Style */
+        .box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 32px;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 1. Header Box (Wide) */
+        .box-header {
+            grid-column: span 3;
+            background: #1a1a1a;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 70px;
+            font-weight: 800;
+            line-height: 0.9;
+            letter-spacing: -3px;
+        }
+
+        /* 2. Photo Box (Small/Square) */
+        .box-photo {
+            grid-column: span 1;
+            padding: 0;
+        }
+
+        .box-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 3. Education/Experience (Large Vertical) */
+        .box-tall {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        /* 4. Skills (Wide Horizontal) */
+        .box-wide {
+            grid-column: span 2;
+        }
+
+        /* 5. Contact (Small Square) */
+        .box-contact {
+            grid-column: span 2;
+            background: #d4ff00; /* Neon Lime */
+            color: #000;
+        }
+
+        /* Typography & Decor */
+        .label {
+            font-family: 'Syne', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            display: block;
+            opacity: 0.5;
+        }
+
+        .box-contact .label { opacity: 1; }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #444;
+            white-space: pre-line;
+        }
+
+        .skill-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-chip {
+            background: #000;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .email-large {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+            color: #000;
+            word-break: break-all;
+        }
+
+        /* Buttons Navigation */
+        .btn-print, .btn-back {
+            position: fixed;
+            top: 20px;
+            background: #000;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Syne', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            z-index: 100;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-print { right: 20px; }
+        .btn-back { left: 20px; }
+
+        .btn-print:hover, .btn-back:hover {
+            background: #d4ff00;
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 900px) {
+            .bento-container { grid-template-columns: 1fr; }
+            .box { grid-column: span 1 !important; grid-row: auto !important; }
+            .box-header h1 { font-size: 40px; }
+            body { padding-top: 100px; }
+        }
+
+        @media print {
+            .btn-print, .btn-back { display: none; }
+            body { padding: 0; background: #fff; }
+            .box { border: 1px solid #eee; break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<a href="/profile" class="btn-back">
+    <i class="fa-solid fa-chevron-left"></i> Dashboard
+</a>
+
+<button onclick="window.print()" class="btn-print">
+    <i class="fa-solid fa-file-pdf"></i> Save as PDF
+</button>
+
+<div class="bento-container">
+    
+    <div class="box box-header">
+        <h1>{{ user.name }}</h1>
+        <i class="fa-solid fa-arrow-right-long" style="font-size: 40px; opacity: 0.3;"></i>
+    </div>
+
+    <div class="box box-photo">
+        {% if user.photo %}
+            <img src="{{ url_for('static', filename='uploads/' + user.photo) }}">
+        {% else %}
+            <img src="{{ url_for('static', filename='uploads/default.png') }}">
+        {% endif %}
+    </div>
+
+    <div class="box box-tall">
+        <span class="label">01. Experience</span>
+        <h2>The Journey</h2>
+        <p>{{ resume.experience }}</p>
+    </div>
+
+    <div class="box box-wide">
+        <span class="label">02. Education</span>
+        <h2>Foundation</h2>
+        <p>{{ resume.education }}</p>
+    </div>
+
+    <div class="box box-contact">
+        <span class="label">Connect</span>
+        <a href="mailto:{{ user.email }}" class="email-large">{{ user.email }}</a>
+    </div>
+
+    <div class="box box-wide">
+        <span class="label">03. Expertise</span>
+        <h2>Skills</h2>
+        <div class="skill-cloud">
+            {% for skill in resume.skills.split(',') %}
+                <div class="skill-chip">{{ skill.strip() }}</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="box box-tall">
+        <span class="label">04. Projects</span>
+        <h2>Portfolio</h2>
+        <p>{{ resume.projects }}</p>
+    </div>
+
+</div>
+
+</body>
+</html>

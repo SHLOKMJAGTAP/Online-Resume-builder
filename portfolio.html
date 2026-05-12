@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.name }} | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Cinzel:wght@400;700&family=Prata&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --royal-gold: linear-gradient(135deg, #c5a059 0%, #f1e2af 50%, #c5a059 100%);
+            --gold-solid: #c5a059;
+            --deep-black: #050505;
+            --soft-black: #0a0a0a;
+            --cream: #fdfcf0;
+            --border-gold: rgba(197, 160, 89, 0.3);
+        }
+
+        /* --- 1. GLOBAL ENHANCEMENTS --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--deep-black);
+            color: var(--cream);
+            font-family: 'Prata', serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Progress Bar */
+        #scroll-tracker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--royal-gold);
+            z-index: 10000;
+        }
+
+        /* --- 2. ANIMATION BASE STATES --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- BACKGROUND DECOR --- */
+        .royal-border {
+            position: fixed;
+            top: 20px; left: 20px; right: 20px; bottom: 20px;
+            border: 1px solid var(--border-gold);
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        /* --- 3. HERO SECTION (Parallax Enabled) --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #111 0%, var(--deep-black) 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 400;
+            letter-spacing: 8px;
+            background: var(--royal-gold);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent; 
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            animation: heroFade 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes heroFade {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        .hero-line {
+            width: 150px;
+            height: 1px;
+            background: var(--royal-gold);
+            margin: 20px auto;
+            transform: scaleX(0);
+            animation: lineGrow 1.5s ease forwards 0.8s;
+        }
+
+        @keyframes lineGrow {
+            to { transform: scaleX(1); }
+        }
+
+        .hero-email {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: var(--gold-solid);
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.2s;
+            position: relative;
+        }
+
+        .hero-email::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 1px;
+            bottom: -5px; left: 0;
+            background: var(--gold-solid);
+            transition: width 0.3s ease;
+        }
+
+        .hero-email:hover::after { width: 100%; }
+
+        @keyframes fadeIn { to { opacity: 0.8; } }
+
+        /* --- 4. CONTENT WRAPPER --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        /* --- PROFILE --- */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 150px;
+        }
+
+        .profile-frame {
+            position: relative;
+            padding: 15px;
+            border: 1px solid var(--border-gold);
+            overflow: hidden;
+            background: rgba(197, 160, 89, 0.02);
+        }
+
+        .profile-frame img {
+            width: 100%;
+            display: block;
+            filter: sepia(10%) contrast(105%);
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active .profile-frame img {
+            transform: scale(1.03);
+        }
+
+        .profile-text h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--gold-solid);
+            letter-spacing: 2px;
+        }
+
+        /* --- 5. BENTO LUXE GRID --- */
+        .luxe-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .luxe-card {
+            background: var(--soft-black);
+            padding: 50px;
+            border: 1px solid var(--border-gold);
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .luxe-card:hover {
+            border-color: var(--gold-solid);
+            transform: translateY(-10px);
+            background: #0d0d0d;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(197, 160, 89, 0.05);
+        }
+
+        /* --- LINK STYLING --- */
+        .luxe-card a {
+            color: var(--gold-solid);
+            text-decoration: none;
+            border-bottom: 1px goldenrod;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .luxe-card a:hover {
+            color: #f1e2af;
+            text-decoration: underline;
+        }
+
+        /* Staggered transition delays for grid */
+        .luxe-grid .reveal:nth-child(2) { transition-delay: 0.1s; }
+        .luxe-grid .reveal:nth-child(3) { transition-delay: 0.2s; }
+        .luxe-grid .reveal:nth-child(4) { transition-delay: 0.3s; }
+
+        .full-width { grid-column: span 2; }
+
+        .card-label {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: var(--gold-solid);
+            letter-spacing: 4px;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        /* --- 6. ACTIONS & FOOTER --- */
+        .actions {
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .btn-royal {
+            font-family: 'Cinzel', serif;
+            padding: 20px 60px;
+            background: transparent;
+            color: var(--gold-solid);
+            border: 1px solid var(--gold-solid);
+            text-decoration: none;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 13px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-block;
+            position: relative;
+        }
+
+        .btn-royal:hover {
+            background: var(--gold-solid);
+            color: var(--deep-black);
+            box-shadow: 0 0 40px rgba(197, 160, 89, 0.2);
+            letter-spacing: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 80px 60px;
+            border-top: 1px solid var(--border-gold);
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--gold-solid);
+            opacity: 0.6;
+        }
+
+        @media (max-width: 900px) {
+            .profile-section, .luxe-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .container { padding: 40px 20px; }
+            .royal-border { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="scroll-tracker"></div>
+<div class="royal-border"></div>
+
+<section class="hero" id="hero-parallax">
+    <h1>{{ user.name }}</h1>
+    <div class="hero-line"></div>
+    <a href="mailto:{{ user.email }}" class="hero-email">{{ user.email }}</a>
+</section>
+
+<div class="container">
+    
+    <div class="profile-section reveal">
+        <div class="profile-frame">
+            <img src="{{ url_for('static', filename='uploads/' + (user.photo if user.photo else 'default.png')) }}" alt="Portrait">
+        </div>
+        <div class="profile-text">
+            <h2>The Portfolio</h2>
+            <p>
+                A formal curation of academic achievements, professional milestones, and technical mastery. 
+                This documentation reflects a dedicated pursuit of excellence within my chosen field.
+            </p>
+        </div>
+    </div>
+
+    <div class="luxe-grid">
+        
+        {% if resume.education %}
+        <div class="luxe-card full-width reveal">
+            <span class="card-label">Curriculum</span>
+            <h3>Education</h3>
+            <p style="white-space: pre-line;">{{ resume.education }}</p>
+        </div>
+        {% endif %}
+
+        {% if resume.skills %}
+        <div class="luxe-card reveal">
+            <span class="card-label">Competencies</span>
+            <h3>Skills & Mastery</h3>
+            <p style="white-space: pre-line;">{{ resume.skills }}</p>
+        </div>
+        {% endif %}
+
+        {% if resume.experience %}
+        <div class="luxe-card reveal">
+            <span class="card-label">Chronology</span>
+            <h3>Experience</h3>
+            <p style="white-space: pre-line;">{{ resume.experience }}</p>
+        </div>
+        {% endif %}
+
+        {% if resume.projects %}
+        <div class="luxe-card full-width reveal">
+            <span class="card-label">Portfolio Selection</span>
+            <h3>Notable Projects</h3>
+            <p style="white-space: pre-line;">{{ resume.projects | urlize(target="_blank") }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="actions reveal">
+        <a href="/profile" class="btn-royal">Return to Dashboard</a>
+    </div>
+
+</div>
+
+<footer>
+    EST. 2026 &bull; {{ user.name }} &bull; ALL RIGHTS RESERVED
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. SCROLL PROGRESS TRACKER ---
+        const scrollTracker = document.getElementById('scroll-tracker');
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollTracker.style.width = scrolled + "%";
+        });
+
+        // --- 2. HERO PARALLAX EFFECT ---
+        const heroH1 = document.querySelector('.hero h1');
+        window.addEventListener('scroll', () => {
+            const offset = window.pageYOffset;
+            heroH1.style.transform = `translateY(${offset * 0.4}px)`;
+            heroH1.style.opacity = 1 - (offset / 700);
+        });
+
+        // --- 3. ADVANCED SCROLL REVEAL ---
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
+        });
+    });
+</script>
+
+</body>
+</html>

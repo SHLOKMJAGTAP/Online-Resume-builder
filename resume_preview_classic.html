@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Executive Classic | {{ user.name }}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Lora:wght@400;500;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <style>
+        body {
+            margin: 0;
+            background: #e0e0e0;
+            font-family: 'Lora', serif;
+            color: #1a1a1a;
+        }
+
+        .resume {
+            max-width: 850px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 80px 90px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Subtle Border Frame for Classic feel */
+        .resume::after {
+            content: "";
+            position: absolute;
+            top: 20px; bottom: 20px; left: 20px; right: 20px;
+            border: 1px solid #f0f0f0;
+            pointer-events: none;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center; 
+            margin-bottom: 60px;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            margin-top: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        /* LAYOUT */
+        .content {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            column-gap: 50px;
+        }
+
+        /* SIDEBAR (Left) */
+        .sidebar {
+            border-right: 1px solid #eee;
+            padding-right: 40px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 40px;
+        }
+
+        .sidebar-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        .sidebar-section p {
+            font-size: 14px;
+            line-height: 2;
+            color: #555;
+            white-space: pre-line;
+            font-style: italic;
+        }
+
+        /* MAIN CONTENT (Right) */
+        .main-section {
+            margin-bottom: 50px;
+        }
+
+        .main-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 5px;
+        }
+
+        .main-section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+            color: #000;
+        }
+
+        .main-section-header i {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .main-section-content {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #333;
+            white-space: pre-line;
+            text-align: justify;
+        }
+
+        /* NAVIGATION BUTTONS */
+        .download-btn, .back-btn {
+            position: fixed;
+            bottom: 30px;
+            padding: 15px 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #000;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .download-btn {
+            right: 30px;
+            background: #000;
+            color: #fff;
+        }
+
+        .download-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .back-btn {
+            left: 30px;
+            background: #fff;
+            color: #000;
+        }
+
+        .back-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .resume { box-shadow: none; margin: 0; padding: 40px; width: 100%; }
+            .resume::after { display: none; }
+            .download-btn, .back-btn { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+<a href="/profile" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i> Dashboard
+</a>
+
+<button onclick="downloadCV()" class="download-btn">
+    Print Legacy CV
+</button>
+
+<div class="resume">
+
+    <div class="header">
+        <h1>{{ user.name }}</h1>
+        <p>
+            <i class="fa-regular fa-envelope"></i> {{ user.email }}
+            &nbsp; &bull; &nbsp;
+            CURRICULUM VITAE
+        </p>
+    </div>
+
+    <div class="content">
+
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>Expertise</h3>
+                <p>{{ resume.skills }}</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Contact</h3>
+                <p style="font-style: normal; font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 1px;">
+                    AVAILABLE FOR <br> GLOBAL OPPORTUNITIES
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <div class="main-section">
+                <div class="main-section-header">
+                    <h2>Academic History</h2>
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="main-section-content">
+                    {{ resume.education }}
+                </div>
+            </div>
+
+            <div class="main-section">
+                <div class="main-section-header">
+                    <h2>Professional Experience</h2>
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <div class="main-section-content">
+                    {{ resume.experience }}
+                </div>
+            </div>
+
+            <div class="main-section">
+                <div class="main-section-header">
+                    <h2>Significant Projects</h2>
+                    <i class="fa-solid fa-diagram-project"></i>
+                </div>
+                <div class="main-section-content">
+                    {{ resume.projects }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function downloadCV() {
+    window.print();
+}
+</script>
+
+</body>
+</html>

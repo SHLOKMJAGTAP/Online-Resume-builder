@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.name }} | Premium Presentation</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Prata&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <style>
+        :root {
+            --royal-gold: linear-gradient(135deg, #c5a059 0%, #f1e2af 50%, #c5a059 100%);
+            --gold-solid: #c5a059;
+            --bg-dark: #050505;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(197, 160, 89, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(197, 160, 89, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(197, 160, 89, 0.05) 0%, transparent 40%);
+            color: #fdfcf0;
+            font-family: 'Inter', sans-serif;
+            padding: 60px 20px;
+            line-height: 1.6;
+        }
+
+        .presentation-card {
+            max-width: 950px;
+            margin: auto;
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 80px;
+            position: relative;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+        }
+
+        /* Decorative Corners */
+        .corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-color: var(--gold-solid);
+            border-style: solid;
+            opacity: 0.6;
+        }
+
+        .tl { top: 20px; left: 20px; border-width: 1px 0 0 1px; }
+        .br { bottom: 20px; right: 20px; border-width: 0 1px 1px 0; }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 52px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+
+            /* Fallback (Firefox / Print / ATS) */
+            color: var(--gold-solid);
+
+            /* Gradient text */
+            background: var(--royal-gold);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            text-shadow: 0 2px 15px rgba(197,160,89,0.15);
+        }
+
+        .contact-bar {
+            font-family: 'Prata', serif;
+            color: var(--gold-solid);
+            font-size: 14px;
+            letter-spacing: 2px;
+            opacity: 0.85;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+        }
+
+        .section-label {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            color: var(--gold-solid);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 15px;
+        }
+
+        .section-content {
+            font-family: 'Prata', serif;
+            font-size: 16px;
+            color: #e0e0e0;
+            white-space: pre-line;
+            text-align: justify;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-item {
+            border: 1px solid var(--glass-border);
+            padding: 6px 16px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: var(--gold-solid);
+            background: rgba(197, 160, 89, 0.05);
+        }
+
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: var(--royal-gold);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.3s;
+            z-index: 100;
+        }
+
+        .print-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(197, 160, 89, 0.3);
+        }
+
+        /* Print Fix */
+        @media print {
+            body {
+                background: white;
+                color: black;
+                padding: 0;
+            }
+
+            .presentation-card {
+                background: white;
+                box-shadow: none;
+                border: none;
+                padding: 40px;
+                width: 100%;
+            }
+
+            header h1 {
+                background: none !important;
+                color: black !important;
+                -webkit-text-fill-color: black !important;
+                text-shadow: none;
+            }
+
+            .section-label,
+            .contact-bar,
+            .skill-item {
+                color: black !important;
+                border-color: #ccc !important;
+            }
+
+            .print-btn,
+            .corner {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .presentation-card {
+                padding: 40px 20px;
+            }
+
+            header h1 {
+                font-size: 32px;
+                letter-spacing: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Download Legacy</button>
+
+<div class="presentation-card">
+    <div class="corner tl"></div>
+    <div class="corner br"></div>
+
+    <header>
+        <h1>{{ user.name }}</h1>
+        <div class="contact-bar">
+            {{ user.email }} &nbsp; | &nbsp; PROPRIETARY PORTFOLIO
+        </div>
+    </header>
+
+    <div class="section">
+        <div class="section-label">Academic</div>
+        <div class="section-content">{{ resume.education }}</div>
+    </div>
+
+    <div class="section">
+        <div class="section-label">Competencies</div>
+        <div class="skills-grid">
+            {% for skill in resume.skills.split(',') %}
+                <div class="skill-item">{{ skill.strip() }}</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-label">Chronology</div>
+        <div class="section-content">{{ resume.experience }}</div>
+    </div>
+
+    <div class="section" style="margin-bottom: 0;">
+        <div class="section-label">Notable Works</div>
+        <div class="section-content">{{ resume.projects }}</div>
+    </div>
+</div>
+
+</body>
+</html>

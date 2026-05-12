@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Imperial Resume | Supreme Standard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Prata&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #c5a059;
+            --black: #050505;
+        }
+
+        /* --- ENTRANCE ANIMATIONS --- */
+        @keyframes titleEntrance {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); filter: blur(10px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+
+        @keyframes navEntrance {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--black);
+            color: #fff;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+        }
+
+        /* Particles */
+        canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* --- THE BACKGROUND TEXT --- */
+        .bg-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .imperial-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 18vw;
+            letter-spacing: 0.2vw;
+            color: rgba(255, 255, 255, 0.02);
+            text-transform: uppercase;
+        }
+
+        /* --- THE TRUE CENTER LIGHT --- */
+        .light-reveal {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle 250px at var(--m-x, 50%) var(--m-y, 50%), black 0%, transparent 100%);
+            mask-image: radial-gradient(circle 250px at var(--m-x, 50%) var(--m-y, 50%), black 0%, transparent 100%);
+        }
+
+        .gold-text {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 18vw;
+            letter-spacing: 0.2vw;
+            color: var(--gold);
+            text-transform: uppercase;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 0 0 30px rgba(197, 160, 89, 0.6);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 80px;
+            z-index: 100;
+            animation: navEntrance 1s ease-out forwards;
+        }
+
+        nav h2 { 
+            font-family: 'Cinzel', serif; 
+            color: var(--gold); 
+            letter-spacing: 5px; 
+            font-size: 1.2rem; 
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { 
+            color: var(--gold); 
+            text-shadow: 0 0 10px var(--gold);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .hero-content { text-align: center; max-width: 900px; }
+
+        .hero-content h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            background: linear-gradient(90deg, #c5a059, #fff, #c5a059);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            animation: 
+                titleEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+                shimmer 4s linear infinite;
+        }
+
+        .hero-content p {
+            font-family: 'Prata', serif;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: titleEntrance 1s ease-out 0.8s forwards;
+        }
+
+        .cta-btn {
+            margin-top: 40px;
+            padding: 20px 50px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: 0.4s ease;
+            opacity: 0;
+            animation: titleEntrance 1s ease-out 1.2s forwards;
+        }
+
+        .cta-btn:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 50px rgba(197, 160, 89, 0.5);
+        }
+
+        footer {
+            padding: 30px;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            color: rgba(197, 160, 89, 0.2);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="dustCanvas"></canvas>
+
+    <div class="bg-container">
+        <div class="imperial-text">IMPERIAL</div>
+    </div>
+
+    <div class="light-reveal" id="light-reveal">
+        <div class="gold-text">IMPERIAL</div>
+    </div>
+
+    <nav>
+        <h2>IMPERIAL RESUME</h2>
+        <div class="nav-links">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+    </nav>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h1>Excellence Defined</h1>
+            <p>The definitive standard for professional prestige.</p>
+            <a href="/register" style="text-decoration: none;">
+                <button class="cta-btn">Begin Your Story</button>
+            </a>
+        </div>
+    </main>
+
+    <footer>© 2026 THE IMPERIAL RESUME</footer>
+
+    <script>
+        const canvas = document.getElementById('dustCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(x, y, isTrail = false) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || Math.random() * canvas.height;
+                this.size = Math.random() * (isTrail ? 2.5 : 1.2) + 0.2;
+                this.vx = Math.random() * 1.5 - 0.75;
+                this.vy = Math.random() * 1.5 - 0.75;
+                this.life = 1.0;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.decay = isTrail ? 0.015 : 0.003;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life -= this.decay;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(197, 160, 89, ${this.life * this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Tracking exactly under cursor
+        window.addEventListener('mousemove', (e) => {
+            document.body.style.setProperty('--m-x', e.clientX + 'px');
+            document.body.style.setProperty('--m-y', e.clientY + 'px');
+
+            for(let i=0; i<4; i++) {
+                particles.push(new Particle(e.clientX, e.clientY, true));
+            }
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if(particles.filter(p => p.decay < 0.01).length < 70) {
+                particles.push(new Particle());
+            }
+
+            particles = particles.filter(p => p.life > 0);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>

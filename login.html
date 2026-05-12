@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sovereign Access | Imperial Resume</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Prata&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #c5a059;
+            --gold-glow: rgba(197, 160, 89, 0.4);
+            --obsidian: #050505;
+            --silk-black: #0a0a0a;
+            --ivory: #fdfcf0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--ivory);
+            font-family: 'Prata', serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            /* MATCHED ARCHITECTURAL BACKGROUND */
+            background-image: 
+                radial-gradient(circle at 50% 50%, var(--silk-black), var(--obsidian)),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L100 50 L50 100 L0 50 Z' fill='none' stroke='%23c5a059' stroke-opacity='0.05' stroke-width='0.5'/%3E%3C/svg%3E");
+        }
+
+        /* --- MATCHED GRAND ARCHIVE FRAME --- */
+        .archive-container {
+            position: relative;
+            width: 90vw;
+            max-width: 1200px;
+            height: 85vh;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            background: var(--silk-black);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+            /* THE "APPEAR" ANIMATION */
+            animation: pageEntrance 1.2s ease-out;
+        }
+
+        @keyframes pageEntrance {
+            from { opacity: 0; transform: scale(1.05); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        /* --- LEFT PANEL: THE ROYAL LEGACY --- */
+        .legacy-side {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid rgba(197, 160, 89, 0.1);
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+        }
+
+        .royal-crest {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--gold);
+            font-size: 12px;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .legacy-side h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 3.5rem;
+            line-height: 1;
+            color: var(--gold);
+            text-shadow: 0 0 20px var(--gold-glow);
+            margin-bottom: 30px;
+        }
+
+        .royal-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.6rem;
+            line-height: 1.4;
+            color: #888;
+            border-left: 2px solid var(--gold);
+            padding-left: 25px;
+            margin-top: 20px;
+        }
+
+        /* --- RIGHT PANEL: THE AUTHENTICATION --- */
+        .registry-side {
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .registry-side h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.8rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .instruction {
+            font-size: 0.9rem;
+            color: #666;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+
+        /* --- MATCHED ROYAL INPUTS --- */
+        .field-group {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .field-group input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 0;
+            color: white;
+            font-family: 'Prata', serif;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.4s;
+        }
+
+        .field-group input:focus {
+            border-bottom-color: var(--gold);
+            letter-spacing: 1px;
+            background: linear-gradient(to top, rgba(197, 160, 89, 0.05), transparent);
+        }
+
+        /* --- THE SOVEREIGN BUTTON --- */
+        .btn-establish {
+            width: 100%;
+            padding: 22px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 14px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+
+        .btn-establish:hover {
+            background: var(--gold);
+            color: var(--obsidian);
+            box-shadow: 0 0 30px var(--gold-glow);
+        }
+
+        /* --- FLASH ALERTS --- */
+        .alert {
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 15px;
+            font-size: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .footer-link {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #555;
+        }
+
+        .footer-link a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1000px) {
+            .archive-container {
+                grid-template-columns: 1fr;
+                height: auto;
+                margin: 40px 0;
+            }
+            .legacy-side { border-right: none; border-bottom: 1px solid rgba(197, 160, 89, 0.1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="archive-container">
+    
+    <div class="legacy-side">
+        <div class="royal-crest">Imperial Suite</div>
+        <h1>Welcome<br>Back to<br>Eternity.</h1>
+        
+        <p class="royal-quote">
+            "The wise return to the foundations they have built, for a legacy is not just created, but maintained."
+        </p>
+    </div>
+
+    <div class="registry-side">
+        <h2>Authenticate</h2>
+        <p class="instruction">Re-enter the sovereign domain</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="field-group">
+                <label>Comm-Link (Email)</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="field-group">
+                <label>The Access Cipher</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn-establish">Enter Vault</button>
+        </form>
+
+        <p class="footer-link">
+            NOT YET RECOGNIZED? <a href="/register">SIGN THE REGISTRY</a>
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>

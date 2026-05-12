@@ -1,0 +1,152 @@
+/* --- 1. LUXE SCROLLBAR --- */
+::-webkit-scrollbar {
+    width: 10px; /* Slightly wider for presence */
+}
+::-webkit-scrollbar-track {
+    background: var(--deep-black);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb {
+    /* Refined with a "Chiseled Gold" gradient */
+    background: linear-gradient(180deg, #c5a059 0%, #fdfcf0 50%, #c5a059 100%);
+    border: 2px solid var(--deep-black); /* Creates a floating rail effect */
+    border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #f1e2af 0%, #fdfcf0 50%, #f1e2af 100%);
+}
+
+/* --- 2. GLOBAL FEEL & PROGRESS --- */
+html {
+    scroll-behavior: smooth;
+    background-color: var(--deep-black);
+}
+
+::selection {
+    background: var(--gold-solid);
+    color: var(--deep-black);
+    text-shadow: none;
+}
+
+/* Scroll Progress Bar - Added a "glow" to the tip */
+#scroll-tracker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--royal-gold);
+    z-index: 10000;
+    box-shadow: 0 0 10px var(--gold-glow);
+    transition: width 0.1s ease-out;
+}
+
+/* --- 3. BENTO CARD SHIMMER & STAGGER --- */
+.luxe-card {
+    overflow: hidden; 
+    position: relative;
+    /* Improved: Glass-morphism base */
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(197, 160, 89, 0.1);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxe-card:hover {
+    border-color: rgba(197, 160, 89, 0.4);
+    background: rgba(20, 20, 20, 0.8);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.luxe-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%; /* Slightly wider shimmer */
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(241, 226, 175, 0.15), 
+        rgba(255, 255, 255, 0.05),
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: 0.8s ease-in-out;
+}
+
+.luxe-card:hover::after {
+    left: 150%;
+}
+
+/* Staggered Entrance Logic Preserved */
+.luxe-grid .reveal:nth-child(1) { transition-delay: 0.1s; }
+.luxe-grid .reveal:nth-child(2) { transition-delay: 0.2s; }
+.luxe-grid .reveal:nth-child(3) { transition-delay: 0.3s; }
+.luxe-grid .reveal:nth-child(4) { transition-delay: 0.4s; }
+
+/* --- 4. PROFILE IMAGE POLISH --- */
+.profile-frame {
+    position: relative;
+    box-shadow: 0 0 20px rgba(197, 160, 89, 0.05);
+    transition: all 0.5s ease;
+    background: rgba(197, 160, 89, 0.02);
+    border: 1px solid rgba(197, 160, 89, 0.1);
+}
+
+.profile-frame img {
+    transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+    filter: grayscale(20%); /* Artistic desaturation */
+}
+
+.profile-frame:hover img {
+    transform: scale(1.08); /* Smoother deep zoom */
+    filter: grayscale(0%);
+}
+
+.profile-frame:hover {
+    box-shadow: 0 0 50px rgba(197, 160, 89, 0.25);
+    border-color: var(--gold-solid);
+}
+
+/* --- 5. BUTTON & LINK FEEDBACK --- */
+.btn-royal {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-royal:hover {
+    letter-spacing: 5px; 
+    box-shadow: 0 0 25px var(--gold-glow);
+}
+
+.btn-royal:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+}
+
+/* Email underline animation - Refined thickness and glow */
+.hero-email {
+    position: relative;
+    display: inline-block;
+    color: var(--gold-solid);
+    text-decoration: none;
+}
+
+.hero-email::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -4px; /* Added slight breathing room */
+    left: 0;
+    background: var(--royal-gold);
+    box-shadow: 0 0 8px var(--gold-glow);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-email:hover::after {
+    width: 100%;
+}
